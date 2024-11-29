@@ -1,2 +1,2 @@
-const name = "Samuil";
-console.log(name);
+const unusedVar = "This is not used.";
+console.log("Hello, World!");
