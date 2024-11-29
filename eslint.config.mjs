@@ -95,7 +95,7 @@ export default eslintTs.config(
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-unused-expressions": "off",
       // React
-      "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
+      "react/jsx-filename-extension": ["error", { extensions: [".js", ".jsx", ".tsx"] }],
       "react/destructuring-assignment": "off",
       // "react/jsx-max-props-per-line": [1, { maximum: 1 }], //it doesn't work with prettier, you can remove prettier from rules: 'prettier/prettier'...
       // "react/jsx-first-prop-new-line": [1, "multiline"], //it doesn't work with prettier, you can remove prettier from rules: 'prettier/prettier'...
