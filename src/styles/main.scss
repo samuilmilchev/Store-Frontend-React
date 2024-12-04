@@ -7,11 +7,13 @@
 }
 
 body {
-  color: $basicColor;
-  // prettier-ignore
-  font: 14px "OpenSans-Regular", sans-serif;
+  margin: 0;
+  font:
+    14px "OpenSans-Regular",
+    sans-serif;
   min-height: 100vh;
-  background: top / contain url(images/background.svg) no-repeat;
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
@@ -22,5 +24,36 @@ h1 {
 h2 {
   font-size: 2em;
   /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
-  height: fit-content; /* test for autoprefixer in postcss */
+  height: fit-content;
+}
+
+.navText {
+  font-size: 30px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.footer {
+  background-color: #282c34;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  margin-top: auto;
+}
+
+.page-content {
+  color: #3498db;
+  font-size: 1.5rem;
+  text-align: center;
 }
