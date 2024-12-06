@@ -1,28 +1,28 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./styles/main.scss";
+import * as styles from "./styles/main.module.scss";
 
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { ROUTES } from "./routes";
 
 function Home() {
-  return <div className="page-content">Home Page</div>;
+  return <div className={styles.pageContent}>Home Page</div>;
 }
 function Products() {
-  return <div className="page-content">Products Page</div>;
+  return <div className={styles.pageContent}>Products Page</div>;
 }
 function About() {
-  return <div className="page-content">About Page</div>;
+  return <div className={styles.pageContent}>About Page</div>;
 }
 
 function App() {
   return (
     <Router>
-      <div className="app">
+      <div className={styles.app}>
         <Header />
-        <div className="main-content">
+        <div className={styles.mainContent}>
           <Routes>
             <Route path={ROUTES.HOME} element={<Home />} />
             <Route path={ROUTES.PRODUCTS} element={<Products />} />
