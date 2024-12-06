@@ -1,54 +1,39 @@
-import "./styles/main.scss";
-// watch: native intellisense and file-peek for aliases from jsconfig.json and with none-js files doesn't work: https://github.com/microsoft/TypeScript/issues/29334
-
-import { Component, ErrorInfo /* , StrictMode */ } from "react";
 import ReactDOM from "react-dom/client";
-import TheHeader from "./components/theHeader";
-import Login from "./components/account/login";
-import apiEndpoints from "./api.endpoints";
-import HelloPage from "./HelloPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-interface Props {}
-interface State {}
+import * as styles from "./styles/main.module.scss";
 
-async function testFetch(): Promise<void> {
-  const data = await (await fetch(apiEndpoints.testMock)).json();
-  console.warn("fetched data", data);
+import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
+import { ROUTES } from "./routes";
+
+function Home() {
+  return <div className={styles.pageContent}>Home Page</div>;
+}
+function Products() {
+  return <div className={styles.pageContent}>Products Page</div>;
+}
+function About() {
+  return <div className={styles.pageContent}>About Page</div>;
 }
 
-class AppContainer extends Component<Props, State> {
-  // ["constructor"]: typeof AppContainer;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-    // test class-dead-code
-    const goExclude = true;
-    if (!goExclude) {
-      console.warn("class-dead-code doesn't work", props);
-    }
-  }
-
-  componentDidMount(): void {
-    setTimeout(testFetch, 300);
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error("got err", { error, errorInfo });
-  }
-
-  render() {
-    return (
-      // <StrictMode>
-      <>
-        <TheHeader />
-        <Login />
-        <HelloPage />
-      </>
-      // </StrictMode>
-    );
-  }
+function App() {
+  return (
+    <Router>
+      <div className={styles.app}>
+        <Header />
+        <div className={styles.mainContent}>
+          <Routes>
+            <Route path={ROUTES.HOME} element={<Home />} />
+            <Route path={ROUTES.PRODUCTS} element={<Products />} />
+            <Route path={ROUTES.ABOUT} element={<About />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </Router>
+  );
 }
 
-ReactDOM.createRoot(document.getElementById("app")!).render(<AppContainer />);
-// React + TS: https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets
+ReactDOM.createRoot(document.getElementById("app")!).render(<App />);
