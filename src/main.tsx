@@ -6,6 +6,7 @@ import * as styles from "./styles/main.module.scss";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { ROUTES } from "./routes";
+import ErrorBoundary from "./components/errorBoundary";
 
 function Home() {
   return <div className={styles.pageContent}>Home Page</div>;
@@ -36,4 +37,8 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("app")!).render(<App />);
+ReactDOM.createRoot(document.getElementById("app")!).render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>,
+);

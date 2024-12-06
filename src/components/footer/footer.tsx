@@ -7,7 +7,7 @@ import epicGamesLogo from "../../assets/images/Epic_Games_logo.svg.png";
 function Footer() {
   return (
     <footer className={styles.footer}>
-      <div className={styles.slogan}>Incredible convenient</div>
+      <div className={styles.slogan}>samuil.milchev@ventionteams.com</div>
       <div className={styles.companyLogos}>
         <a href="https://www.riotgames.com" target="_blank" rel="noopener noreferrer">
           <img src={riotGamesLogo} alt="Riot-Games" className={styles.companyLogo} />
