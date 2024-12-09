@@ -39,6 +39,12 @@ h2 {
 
 .mainContent {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--base-margin);
+  padding: 20px;
 }
 
 .footer {

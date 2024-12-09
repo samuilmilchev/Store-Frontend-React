@@ -7,6 +7,7 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { ROUTES } from "./routes";
 import ErrorBoundary from "./components/errorBoundary";
+import SearchField from "./elements/searchField/searchField";
 
 function Home() {
   return <div className={styles.pageContent}>Home Page</div>;
@@ -30,6 +31,7 @@ function App() {
             <Route path={ROUTES.ABOUT} element={<About />} />
             <Route path="*" element={<Home />} />
           </Routes>
+          <SearchField />
         </div>
         <Footer />
       </div>
