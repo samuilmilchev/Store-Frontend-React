@@ -5,18 +5,29 @@ import * as styles from "./styles/main.module.scss";
 
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
+import ProductsPage from "./components/productPage/productsPage";
+import HomePage from "./components/homePage/homePage";
+
 import { ROUTES } from "./routes";
 import ErrorBoundary from "./components/errorBoundary";
-import SearchField from "./elements/searchField/searchField";
 
 function Home() {
-  return <div className={styles.pageContent}>Home Page</div>;
+  return (
+    <div>
+      <HomePage />
+    </div>
+  );
 }
+
 function Products() {
-  return <div className={styles.pageContent}>Products Page</div>;
+  return (
+    <div>
+      <ProductsPage />
+    </div>
+  );
 }
 function About() {
-  return <div className={styles.pageContent}>About Page</div>;
+  return <div>About Page</div>;
 }
 
 function App() {
@@ -27,11 +38,10 @@ function App() {
         <div className={styles.mainContent}>
           <Routes>
             <Route path={ROUTES.HOME} element={<Home />} />
-            <Route path={ROUTES.PRODUCTS} element={<Products />} />
+            <Route path={`${ROUTES.PRODUCTS}/:category`} element={<Products />} />
             <Route path={ROUTES.ABOUT} element={<About />} />
             <Route path="*" element={<Home />} />
           </Routes>
-          <SearchField />
         </div>
         <Footer />
       </div>

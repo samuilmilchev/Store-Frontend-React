@@ -5,7 +5,6 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
 }
 
 .header {
@@ -48,4 +47,42 @@ body {
   outline: none;
   box-shadow: 0 0 4px 2px #61dafb;
   border-radius: 4px;
+}
+
+.dropdownToggle {
+  background-color: transparent;
+  border: none;
+  color: #61dafb;
+  padding: 0;
+  font-size: 17px;
+
+  &:hover,
+  &:focus {
+    color: #21a0f0;
+  }
+}
+
+.dropdownMenu {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  background-color: #282c34;
+  color: #fff;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  margin-top: 10px;
+}
+
+.dropdownItem {
+  padding: 0.5rem 1rem;
+  color: #61dafb;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #21a0f0;
+    color: #fff;
+  }
 }

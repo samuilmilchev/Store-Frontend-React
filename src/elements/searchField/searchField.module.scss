@@ -1,20 +1,23 @@
 .searchField {
   position: relative;
-  width: 100%;
-  max-width: 400px;
+  width: 1000px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .inputWrapper {
   position: relative;
   display: flex;
   align-items: center;
+  width: 1000px;
 }
 
 .searchInput {
   width: 100%;
   padding: 8px 40px 8px 12px;
   font-size: 16px;
-  border: 1px solid rgba(204, 204, 204, 0.5);
+  border: 1px solid white;
   border-radius: 4px;
   background: none;
   backdrop-filter: blur(5px);
