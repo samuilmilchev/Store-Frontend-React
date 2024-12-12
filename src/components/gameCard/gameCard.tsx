@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import * as styles from "./gameCard.module.scss";
 
@@ -11,8 +10,7 @@ type GameCardProps = {
   image?: string;
 };
 
-// eslint-disable-next-line react/function-component-definition
-const GameCard: React.FC<GameCardProps> = ({ name, price, description, image }) => {
+function GameCard({ name, price, description, image }: GameCardProps) {
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
     <div className={styles.card} tabIndex={0}>
@@ -30,6 +28,6 @@ const GameCard: React.FC<GameCardProps> = ({ name, price, description, image }) 
       </div>
     </div>
   );
-};
+}
 
 export default GameCard;

@@ -3,8 +3,7 @@ import debounce from "lodash.debounce";
 import { searchProducts } from "../../api/searchApi";
 import * as styles from "./searchField.module.scss";
 
-// eslint-disable-next-line react/function-component-definition
-const SearchField: React.FC = () => {
+function SearchField() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<{ id: number; name: string }[]>([]);
   const [loading, setLoading] = useState(false);
@@ -57,6 +56,6 @@ const SearchField: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default SearchField;
