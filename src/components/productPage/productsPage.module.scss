@@ -1,0 +1,63 @@
+.pageContent {
+  position: relative;
+  padding: 20px;
+  background-color: none;
+  backdrop-filter: blur(5px);
+  border-radius: 8px;
+  border: 2px solid white;
+  width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pageTitle {
+  font-size: 2rem;
+  color: #e8e6ec;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.categoryInfo {
+  font-size: 1.2rem;
+  color: #e8e6ec;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.productList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.productList li {
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #e8e6ec;
+  font-size: 15px;
+  text-align: center;
+  width: 200px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.productList li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.loadingMessage,
+.noProductsMessage {
+  font-size: 1.1rem;
+  color: #999;
+  text-align: center;
+}

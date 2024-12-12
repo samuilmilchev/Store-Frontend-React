@@ -1,0 +1,83 @@
+.pageContent {
+  color: #e8e6ec;
+  font-size: 1.2rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  display: flex;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+.category {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgb(16, 16, 16);
+  border: 2px solid white;
+  border-radius: 8px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.category:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+  color: #e8e6ec;
+}
+
+.categoryContent {
+  width: 1000px;
+  background-color: none;
+  backdrop-filter: blur(3px);
+  padding-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.categoryText {
+  font-size: 20px;
+  color: #e8e6ec;
+  margin-top: 4px;
+}
+
+.topGames {
+  text-align: center;
+  margin: 2rem 0;
+  background-color: none;
+  backdrop-filter: blur(3px);
+  border: 1px solid white;
+  border-radius: 5px;
+
+  h1 {
+    color: #e8e6ec;
+    font-size: 30px;
+    margin-bottom: 1rem;
+  }
+
+  .cardsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1rem;
+    flex-wrap: nowrap;
+  }
+}
