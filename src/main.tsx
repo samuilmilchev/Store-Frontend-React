@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -31,10 +32,19 @@ function About() {
 }
 
 function App() {
+  // Manage the authenticated user state
+  const [userName, setUserName] = useState<string | null>(null);
+
+  // Callback to update the authenticated user
+  const handleAuthUser = (user: string | null) => {
+    setUserName(user);
+  };
+
   return (
     <Router>
       <div className={styles.app}>
-        <Header />
+        {/* Pass userName and onAuthUser as props to Header */}
+        <Header onAuthUser={handleAuthUser} userName={userName} />
         <div className={styles.mainContent}>
           <Routes>
             <Route path={ROUTES.HOME} element={<Home />} />

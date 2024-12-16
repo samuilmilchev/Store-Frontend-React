@@ -1,11 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import SignInModal from "@/components/user/signInModal";
+import SignUpModal from "@/components/user/signUpModal";
 import { ROUTES } from "../../routes";
 import * as styles from "./header.module.scss";
 
-function Header() {
+interface HeaderProps {
+  onAuthUser: (userName: string | null) => void; // Callback to update parent state
+  userName: string | null; // Current authenticated user
+}
+
+function Header({ onAuthUser, userName }: HeaderProps) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -20,6 +29,11 @@ function Header() {
 
   const closeDropdown = () => {
     setShowDropdown(false);
+  };
+
+  const handleSignOut = () => {
+    onAuthUser(null); // Reset user to null
+    navigate(ROUTES.HOME); // Redirect to Home
   };
 
   useEffect(() => {
@@ -65,7 +79,47 @@ function Header() {
         <NavLink to={ROUTES.ABOUT} className={({ isActive }) => classNames(styles.link, { [styles.activeLink]: isActive })}>
           About
         </NavLink>
+
+        {userName ? (
+          <>
+            <span className={styles.userName}>{userName}</span>
+            <button type="button" onClick={handleSignOut} className={styles.link}>
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <>
+            <button type="button" onClick={() => setShowSignIn(true)} className={styles.link}>
+              Sign In
+            </button>
+            <button type="button" onClick={() => setShowSignUp(true)} className={styles.link}>
+              Sign Up
+            </button>
+          </>
+        )}
       </nav>
+
+      {showSignIn && (
+        <SignInModal
+          onClose={() => setShowSignIn(false)}
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          onSignIn={(userName) => {
+            onAuthUser(userName);
+            setShowSignIn(false);
+          }}
+        />
+      )}
+
+      {showSignUp && (
+        <SignUpModal
+          onClose={() => setShowSignUp(false)}
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          onSignUp={(userName) => {
+            onAuthUser(userName);
+            setShowSignUp(false);
+          }}
+        />
+      )}
     </header>
   );
 }
