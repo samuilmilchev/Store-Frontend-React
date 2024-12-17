@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import InputText from "@/elements/user/inputText";
+import { mockSignIn } from "@/api/auth/mockSignIn";
 import Modal from "./modal";
+import * as styles from "./modal.module.scss";
 
 interface SignInModalProps {
   onClose: () => void;
@@ -12,22 +14,21 @@ function SignInModal({ onClose, onSignIn }: SignInModalProps) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (userName && password) {
-      // Simulate API Call
-      fetch("/api/auth/signIn", {
-        method: "POST",
-        body: JSON.stringify({ userName, password }),
-        headers: { "Content-Type": "application/json" },
-      }).then((response) => {
+      try {
+        const response = await mockSignIn(userName, password);
         if (response.status === 200) {
           onSignIn(userName);
           onClose();
         } else {
           setError("Invalid credentials");
         }
-      });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-shadow
+      } catch (error) {
+        setError("Invalid credentials");
+      }
     } else {
       setError("All fields are required");
     }
@@ -39,7 +40,7 @@ function SignInModal({ onClose, onSignIn }: SignInModalProps) {
         <h2>Sign In</h2>
         <InputText type="text" label="Username" value={userName} onChange={(e) => setUserName(e.target.value)} />
         <InputText type="password" label="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        {error && <div className="error">{error}</div>}
+        {error && <div className={styles.error}>{error}</div>}
         <button type="submit">Sign In</button>
       </form>
     </Modal>

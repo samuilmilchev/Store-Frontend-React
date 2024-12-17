@@ -6,9 +6,11 @@ import SignUpModal from "@/components/user/signUpModal";
 import { ROUTES } from "../../routes";
 import * as styles from "./header.module.scss";
 
+import "font-awesome/css/font-awesome.min.css";
+
 interface HeaderProps {
-  onAuthUser: (userName: string | null) => void; // Callback to update parent state
-  userName: string | null; // Current authenticated user
+  onAuthUser: (userName: string | null) => void;
+  userName: string | null;
 }
 
 function Header({ onAuthUser, userName }: HeaderProps) {
@@ -32,8 +34,8 @@ function Header({ onAuthUser, userName }: HeaderProps) {
   };
 
   const handleSignOut = () => {
-    onAuthUser(null); // Reset user to null
-    navigate(ROUTES.HOME); // Redirect to Home
+    onAuthUser(null);
+    navigate(ROUTES.HOME);
   };
 
   useEffect(() => {
@@ -82,9 +84,12 @@ function Header({ onAuthUser, userName }: HeaderProps) {
 
         {userName ? (
           <>
-            <span className={styles.userName}>{userName}</span>
-            <button type="button" onClick={handleSignOut} className={styles.link}>
-              Sign Out
+            <NavLink to={ROUTES.PROFILE} className={({ isActive }) => classNames(styles.link, { [styles.activeLink]: isActive })}>
+              <i className="fa fa-user" aria-hidden="true" />
+              {userName}
+            </NavLink>
+            <button type="button" onClick={handleSignOut} className={classNames(styles.link, styles.signOutIcon)} aria-label="Sign Out">
+              <i className="fa fa-sign-out" aria-hidden="true" />
             </button>
           </>
         ) : (

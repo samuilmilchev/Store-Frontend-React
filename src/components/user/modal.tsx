@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from "react";
 import ReactDOM from "react-dom";
+import * as styles from "./modal.module.scss";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -8,30 +10,35 @@ interface ModalProps {
 
 const Modal = ({ children, onClose }: ModalProps) => {
   return ReactDOM.createPortal(
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div
-      className="modal-content"
-      role="dialog"
-      aria-modal="true"
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-      tabIndex={0} // Makes it focusable
-      onClick={(e) => e.stopPropagation()} // Prevents click propagation
+      className={styles.modalOverlay}
+      role="button"
+      tabIndex={0}
+      onClick={onClose}
       onKeyDown={(e) => {
-        // Optionally handle keys if needed
-        if (e.key === "Enter") {
-          e.stopPropagation();
+        if (e.key === " ") {
+          onClose();
         }
       }}
     >
-      <button
-        className="close-button"
-        onClick={onClose}
-        aria-label="Close Modal"
-        type="button" // Ensures compatibility and avoids warning
+      <div
+        className={styles.modalContent}
+        role="dialog"
+        aria-modal="true"
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            onClose();
+          }
+          e.stopPropagation();
+        }}
+        tabIndex={-1}
       >
-        &times;
-      </button>
-      {children}
+        <button className={styles.closeButton} onClick={onClose} aria-label="Close Modal" type="button">
+          &times;
+        </button>
+        {children}
+      </div>
     </div>,
     document.getElementById("modal-root")!,
   );

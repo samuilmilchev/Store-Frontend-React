@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import InputText from "@/elements/user/inputText";
+import { useNavigate } from "react-router-dom";
+import { mockSignUp } from "@/api/auth/mockSignUp";
 import Modal from "./modal";
+import * as styles from "./modal.module.scss";
 
 interface SignUpModalProps {
   onClose: () => void;
@@ -10,25 +13,47 @@ interface SignUpModalProps {
 function SignUpModal({ onClose, onSignUp }: SignUpModalProps) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (userName && password) {
-      // Simulate API Call
-      fetch("/api/auth/signUp", {
-        method: "PUT",
-        body: JSON.stringify({ userName, password }),
-        headers: { "Content-Type": "application/json" },
-      }).then((response) => {
-        if (response.status === 201) {
-          onSignUp(userName);
-        } else {
-          setError("Sign Up failed. Try again.");
-        }
-      });
-    } else {
+
+    if (!userName || !password || !repeatPassword) {
       setError("All fields are required");
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (!/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/.test(password)) {
+      setError("Password must contain at least one alphanumeric character.");
+      return;
+    }
+
+    try {
+      const response = await mockSignUp(userName, password);
+      if (response.status === 201) {
+        onSignUp(userName);
+        onClose();
+        navigate("/profile");
+      } else if (response.status === 400) {
+        setError("User already exists");
+      } else {
+        setError("Sign Up failed. Try again.");
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      setError("An error occurred. Please try again.");
     }
   };
 
@@ -36,9 +61,15 @@ function SignUpModal({ onClose, onSignUp }: SignUpModalProps) {
     <Modal onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
+
         <InputText type="text" label="Username" value={userName} onChange={(e) => setUserName(e.target.value)} />
+
         <InputText type="password" label="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        {error && <div className="error">{error}</div>}
+
+        <InputText type="password" label="Repeat Password" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
+
+        {error && <div className={styles.error}>{error}</div>}
+
         <button type="submit">Sign Up</button>
       </form>
     </Modal>

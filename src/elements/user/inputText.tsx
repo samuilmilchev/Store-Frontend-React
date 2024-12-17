@@ -9,7 +9,7 @@ interface InputTextProps {
 }
 
 function InputText({ type, label, value, onChange, error }: InputTextProps) {
-  const inputId = `input-${label.replace(/\s+/g, "-").toLowerCase()}`; // Generate a unique id based on the label
+  const inputId = `input-${label.replace(/\s+/g, "-").toLowerCase()}`;
 
   return (
     <div>
