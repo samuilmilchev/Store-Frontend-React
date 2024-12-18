@@ -9,8 +9,12 @@ export const mockSignIn = async (userName: string, password: string) => {
     { userName: "exampleUser", password: "mypassword" },
   ];
 
+  const localStorageUsers = JSON.parse(localStorage.getItem("mockUsers") || "[]");
+
+  const allUsers = [...mockUsers, ...localStorageUsers];
+
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const user = mockUsers.find((user) => user.userName === userName && user.password === password);
+  const user = allUsers.find((user) => user.userName === userName && user.password === password);
 
   if (user) {
     return { status: 200, userName: user.userName };
