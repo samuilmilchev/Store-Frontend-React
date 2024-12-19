@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -14,18 +13,15 @@ import ProfilePage from "./components/profilePage/profilePage";
 import { ROUTES } from "./routes";
 import ErrorBoundary from "./components/errorBoundary";
 import ProtectedRoute from "./components/protectedRoute";
+import { AuthProvider, useAuth } from "./components/authContext";
 
 function App() {
-  const [userName, setUserName] = useState<string | null>(null);
-
-  const handleAuthUser = (user: string | null) => {
-    setUserName(user);
-  };
+  const { userName, signIn } = useAuth();
 
   return (
     <Router>
       <div className={styles.app}>
-        <Header onAuthUser={handleAuthUser} userName={userName} />
+        <Header />
         <div className={styles.mainContent}>
           <Routes>
             <Route path={ROUTES.HOME} element={<HomePage />} />
@@ -33,7 +29,7 @@ function App() {
             <Route
               path={`${ROUTES.PRODUCTS}/:category`}
               element={
-                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleAuthUser}>
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={signIn}>
                   <ProductsPage />
                 </ProtectedRoute>
               }
@@ -41,7 +37,7 @@ function App() {
             <Route
               path={ROUTES.ABOUT}
               element={
-                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleAuthUser}>
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={signIn}>
                   <div>About Page</div>
                 </ProtectedRoute>
               }
@@ -57,6 +53,8 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById("app")!).render(
   <ErrorBoundary>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </ErrorBoundary>,
 );

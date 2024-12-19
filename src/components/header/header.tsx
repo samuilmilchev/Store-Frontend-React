@@ -3,17 +3,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import SignInModal from "@/components/user/signInModal";
 import SignUpModal from "@/components/user/signUpModal";
+import { useAuth } from "@/components/authContext";
 import { ROUTES } from "../../routes";
 import * as styles from "./header.module.scss";
 
 import "font-awesome/css/font-awesome.min.css";
 
-interface HeaderProps {
-  onAuthUser: (userName: string | null) => void;
-  userName: string | null;
-}
-
-function Header({ onAuthUser, userName }: HeaderProps) {
+function Header() {
+  const { userName, signIn, signOut } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
@@ -34,7 +31,7 @@ function Header({ onAuthUser, userName }: HeaderProps) {
   };
 
   const handleSignOut = () => {
-    onAuthUser(null);
+    signOut();
     navigate(ROUTES.HOME);
   };
 
@@ -109,7 +106,7 @@ function Header({ onAuthUser, userName }: HeaderProps) {
           onClose={() => setShowSignIn(false)}
           // eslint-disable-next-line @typescript-eslint/no-shadow
           onSignIn={(userName) => {
-            onAuthUser(userName);
+            signIn(userName);
             setShowSignIn(false);
           }}
         />
@@ -120,8 +117,9 @@ function Header({ onAuthUser, userName }: HeaderProps) {
           onClose={() => setShowSignUp(false)}
           // eslint-disable-next-line @typescript-eslint/no-shadow
           onSignUp={(userName) => {
-            onAuthUser(userName);
+            signIn(userName);
             setShowSignUp(false);
+            navigate(ROUTES.PROFILE);
           }}
         />
       )}
