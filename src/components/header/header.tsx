@@ -1,20 +1,25 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import classNames from "classnames";
+
+import { useSelector, useDispatch } from "react-redux";
 import SignInModal from "@/components/user/signInModal";
 import SignUpModal from "@/components/user/signUpModal";
-import { useAuth } from "@/components/authContext";
+import { RootState } from "@/redux/store";
+import { signIn, signOut } from "@/redux/userSlice";
 import { ROUTES } from "../../routes";
 import * as styles from "./header.module.scss";
 
 import "font-awesome/css/font-awesome.min.css";
 
 function Header() {
-  const { userName, signIn, signOut } = useAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userName = useSelector((state: RootState) => state.auth.userName);
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
-  const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const handleNavigation = (path: string) => {
@@ -31,7 +36,7 @@ function Header() {
   };
 
   const handleSignOut = () => {
-    signOut();
+    dispatch(signOut());
     navigate(ROUTES.HOME);
   };
 
@@ -106,7 +111,7 @@ function Header() {
           onClose={() => setShowSignIn(false)}
           // eslint-disable-next-line @typescript-eslint/no-shadow
           onSignIn={(userName) => {
-            signIn(userName);
+            dispatch(signIn(userName));
             setShowSignIn(false);
           }}
         />
@@ -117,7 +122,7 @@ function Header() {
           onClose={() => setShowSignUp(false)}
           // eslint-disable-next-line @typescript-eslint/no-shadow
           onSignUp={(userName) => {
-            signIn(userName);
+            dispatch(signIn(userName));
             setShowSignUp(false);
             navigate(ROUTES.PROFILE);
           }}

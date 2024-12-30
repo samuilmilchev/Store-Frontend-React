@@ -1,6 +1,9 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { Provider, useSelector, useDispatch } from "react-redux";
+import store, { RootState } from "./redux/store";
+
 import "font-awesome/css/font-awesome.min.css";
 import * as styles from "./styles/main.module.scss";
 
@@ -13,10 +16,16 @@ import ProfilePage from "./components/profilePage/profilePage";
 import { ROUTES } from "./routes";
 import ErrorBoundary from "./components/errorBoundary";
 import ProtectedRoute from "./components/protectedRoute";
-import { AuthProvider, useAuth } from "./components/authContext";
+import { signIn } from "./redux/userSlice";
 
 function App() {
-  const { userName, signIn } = useAuth();
+  const userName = useSelector((state: RootState) => state.auth.userName);
+  const dispatch = useDispatch();
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const handleSignIn = (userName: string) => {
+    dispatch(signIn(userName));
+  };
 
   return (
     <Router>
@@ -29,7 +38,7 @@ function App() {
             <Route
               path={`${ROUTES.PRODUCTS}/:category`}
               element={
-                <ProtectedRoute isAuthenticated={!!userName} onSignIn={signIn}>
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleSignIn}>
                   <ProductsPage />
                 </ProtectedRoute>
               }
@@ -37,7 +46,7 @@ function App() {
             <Route
               path={ROUTES.ABOUT}
               element={
-                <ProtectedRoute isAuthenticated={!!userName} onSignIn={signIn}>
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleSignIn}>
                   <div>About Page</div>
                 </ProtectedRoute>
               }
@@ -53,8 +62,8 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById("app")!).render(
   <ErrorBoundary>
-    <AuthProvider>
+    <Provider store={store}>
       <App />
-    </AuthProvider>
+    </Provider>
   </ErrorBoundary>,
 );

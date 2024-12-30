@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+
+import { useDispatch } from "react-redux";
 import InputText from "@/elements/user/inputText";
 import { mockSignIn } from "@/api/auth/mockSignIn";
+import { signIn } from "@/redux/userSlice";
 import Modal from "./modal";
 import * as styles from "./modal.module.scss";
 
 interface SignInModalProps {
   onClose: () => void;
+  // eslint-disable-next-line react/no-unused-prop-types
   onSignIn: (userName: string) => void;
 }
 
-function SignInModal({ onClose, onSignIn }: SignInModalProps) {
+function SignInModal({ onClose }: SignInModalProps) {
+  const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,7 +25,7 @@ function SignInModal({ onClose, onSignIn }: SignInModalProps) {
       try {
         const response = await mockSignIn(userName, password);
         if (response.status === 200) {
-          onSignIn(userName);
+          dispatch(signIn(userName));
           onClose();
         } else {
           setError("Invalid credentials");
