@@ -1,21 +1,26 @@
 import React, { useState } from "react";
-import InputText from "@/elements/user/inputText";
+
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import InputText from "@/elements/user/inputText";
 import { mockSignUp } from "@/api/auth/mockSignUp";
+import { signUp } from "@/redux/userSlice";
 import Modal from "./modal";
 import * as styles from "./modal.module.scss";
 
 interface SignUpModalProps {
   onClose: () => void;
+  // eslint-disable-next-line react/no-unused-prop-types
   onSignUp: (userName: string) => void;
 }
 
-function SignUpModal({ onClose, onSignUp }: SignUpModalProps) {
+function SignUpModal({ onClose }: SignUpModalProps) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +48,7 @@ function SignUpModal({ onClose, onSignUp }: SignUpModalProps) {
     try {
       const response = await mockSignUp(userName, password);
       if (response.status === 201) {
-        onSignUp(userName);
+        dispatch(signUp(userName)); // Dispatch signUp action
         onClose();
         navigate("/profile");
       } else if (response.status === 400) {
