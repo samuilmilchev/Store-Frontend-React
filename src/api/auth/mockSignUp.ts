@@ -11,7 +11,7 @@ export const mockSignUp = async (userName: string, password: string) => {
     return { status: 400, message: "User already exists" };
   }
 
-  const newUser = { userName, password };
+  const newUser = { userName, password, profilePicture: "" };
   localStorage.setItem("mockUsers", JSON.stringify([...mockUsers, newUser]));
 
   return { status: 201, userName };

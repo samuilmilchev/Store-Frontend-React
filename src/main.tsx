@@ -6,6 +6,9 @@ import store, { RootState } from "./redux/store";
 
 import "font-awesome/css/font-awesome.min.css";
 import * as styles from "./styles/main.module.scss";
+// eslint-disable-next-line import/order
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
@@ -56,6 +59,8 @@ function App() {
         </div>
         <Footer />
       </div>
+
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </Router>
   );
 }
