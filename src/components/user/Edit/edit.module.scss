@@ -39,13 +39,8 @@
     color: #ffffff;
     margin-bottom: 0.3rem;
     display: block;
-
-    input {
-      color: white;
-    }
   }
 
-  /* stylelint-disable-next-line no-descending-specificity */
   input {
     width: 100%;
     padding: 0.8rem;
@@ -94,7 +89,25 @@
   }
 }
 
-img {
-  width: 190px;
-  height: 190px;
+.success {
+  color: green;
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.error {
+  color: white;
 }

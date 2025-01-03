@@ -48,7 +48,7 @@ function SignUpModal({ onClose }: SignUpModalProps) {
     try {
       const response = await mockSignUp(userName, password);
       if (response.status === 201) {
-        dispatch(signUp(userName)); // Dispatch signUp action
+        dispatch(signUp(userName));
         onClose();
         navigate("/profile");
       } else if (response.status === 400) {

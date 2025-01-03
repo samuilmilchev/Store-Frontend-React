@@ -1,4 +1,78 @@
-h1,
-p {
+.profilePage {
+  position: relative;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 8px;
+  border: 2px solid #fff;
+  width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #e8e6ec;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.profilePage h1 {
+  font-size: 2.5rem;
+  color: #e8e6ec;
+  margin-bottom: 20px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.Picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  margin-bottom: 15px;
+}
+
+.userInfo h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.userInfo p {
+  font-size: 1.2rem;
+  color: #e8e6ec;
+  font-style: italic;
+}
+
+.profileActions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.profileActions button {
+  background-color: #21a0f0;
   color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.profileActions button:hover {
+  background-color: #1a82cc;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profileActions button:focus {
+  outline: 2px solid #fff;
 }
