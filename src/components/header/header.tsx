@@ -67,6 +67,9 @@ function Header() {
           </button>
           {showDropdown && (
             <div className={styles.dropdownMenu}>
+              <button type="button" className={styles.dropdownItem} onClick={() => handleNavigation(ROUTES.PRODUCTSPAGE)}>
+                All games
+              </button>
               <button type="button" className={styles.dropdownItem} onClick={() => handleNavigation(`${ROUTES.PRODUCTS}/pc`)}>
                 PC
               </button>

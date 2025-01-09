@@ -1,14 +1,20 @@
 import classNames from "classnames";
 import * as styles from "./gameCard.module.scss";
 
-type GameCardProps = {
-  // eslint-disable-next-line react/no-unused-prop-types
+export type Product = {
   id: number;
   name: string;
-  price: string;
+  category?: string;
+  genre?: string;
+  age?: number;
+  rating?: number;
   description: string;
+  price: number;
+  dateAdded?: string;
   image?: string;
 };
+
+type GameCardProps = Pick<Product, "id" | "name" | "price" | "description" | "image">;
 
 function GameCard({ name, price, description, image }: GameCardProps) {
   return (
@@ -17,7 +23,7 @@ function GameCard({ name, price, description, image }: GameCardProps) {
       <div className={classNames(styles.cardInner)}>
         <div className={classNames(styles.cardFront)} style={{ backgroundImage: `url(${image})` }}>
           <h3>{name}</h3>
-          <p>{price}</p>
+          <p>${price}</p>
         </div>
         <div className={classNames(styles.cardBack)}>
           <p>{description}</p>

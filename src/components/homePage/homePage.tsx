@@ -15,7 +15,7 @@ function Home() {
       name: string;
       category: string;
       description: string;
-      price: string;
+      price: number;
       dateAdded: string;
       image: string;
     }[]
@@ -28,7 +28,7 @@ function Home() {
         name: string;
         category: string;
         description: string;
-        price: string;
+        price: number;
         dateAdded: string;
         image: string;
       }[] = await getTopGames();

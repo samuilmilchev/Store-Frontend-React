@@ -1,12 +1,27 @@
 /* eslint-disable react/button-has-type */
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { searchProducts } from "@/api/searchApi";
+import { useEffect, useState } from "react";
+import { getProducts } from "@/api/searchApi";
 import GameCard from "@/components/gameCard/gameCard";
 import SearchField from "@/elements/searchField/searchField";
 import useSpinner from "@/hooks/useSpinner";
 import Spinner from "@/elements/spinner/spinner";
 import * as styles from "./allProductsPage.module.scss";
+
+const useDebounce = (value: string, delay: number) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
 
 interface Product {
   id: number;
@@ -18,12 +33,11 @@ interface Product {
   description: string;
   price: number;
   dateAdded: string;
-  image?: string;
+  image: string;
 }
 
-function Products() {
+function ProductsPage() {
   const loading = useSpinner(500);
-  const { category } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [sortType, setSortType] = useState("rating");
   const [sortDir, setSortDir] = useState("asc");
@@ -33,9 +47,11 @@ function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
+  const debouncedSearchName = useDebounce(searchName, 500);
+
   const fetchProducts = async () => {
     try {
-      const data = await searchProducts(searchName, category, sortType, sortDir, genre, age);
+      const data = await getProducts(sortType, sortDir, genre, age, debouncedSearchName);
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -44,7 +60,7 @@ function Products() {
 
   useEffect(() => {
     fetchProducts();
-  }, [sortType, sortDir, genre, age, searchName, category]);
+  }, [sortType, sortDir, genre, age, debouncedSearchName]);
 
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
@@ -79,7 +95,7 @@ function Products() {
       <div className={styles.pageContent}>
         <div className={styles.filters}>
           <div className={styles.customContent}>
-            <h3>Sort | Filter:</h3>
+            <h3>Sort | Filer:</h3>
             <hr />
             <div className={styles.custom}>
               <select onChange={(e) => handleSortChange(e.target.value)} value={sortType}>
@@ -88,6 +104,7 @@ function Products() {
                 <option value="name">Sort by Name</option>
               </select>
               <button onClick={handleSortDirectionToggle}>Sort Direction ↑ ↓</button>
+
               <select onChange={(e) => setGenre(e.target.value)}>
                 <option value="">All Genres</option>
                 <option value="Shooter">Shooter</option>
@@ -105,7 +122,7 @@ function Products() {
             </div>
           </div>
         </div>
-        <h4>Category: {category?.toUpperCase()}</h4>
+
         <hr />
 
         <div className={styles.productsContainer}>
@@ -130,4 +147,4 @@ function Products() {
   );
 }
 
-export default Products;
+export default ProductsPage;

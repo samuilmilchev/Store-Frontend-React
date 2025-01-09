@@ -3,7 +3,11 @@ import debounce from "lodash.debounce";
 import { searchProducts } from "../../api/searchApi";
 import * as styles from "./searchField.module.scss";
 
-function SearchField() {
+interface SearchFieldProps {
+  onSearch?: (query: string) => void;
+}
+
+function SearchField({ onSearch }: SearchFieldProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<{ id: number; name: string }[]>([]);
   const [loading, setLoading] = useState(false);
@@ -31,6 +35,10 @@ function SearchField() {
     const { value } = e.target;
     setQuery(value);
     debouncedFetch(value);
+
+    if (onSearch) {
+      onSearch(value);
+    }
   };
 
   const handleResultClick = (productName: string) => {

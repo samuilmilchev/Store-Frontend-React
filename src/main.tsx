@@ -15,6 +15,7 @@ import Footer from "./components/footer/footer";
 import ProductsPage from "./components/productPage/productsPage";
 import HomePage from "./components/homePage/homePage";
 import ProfilePage from "./components/profilePage/profilePage";
+import AllProductsPage from "./components/productPage/allProductsPage";
 
 import { ROUTES } from "./routes";
 import ErrorBoundary from "./components/errorBoundary";
@@ -38,6 +39,14 @@ function App() {
           <Routes>
             <Route path={ROUTES.HOME} element={<HomePage />} />
             <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+            <Route
+              path={ROUTES.PRODUCTSPAGE}
+              element={
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleSignIn}>
+                  <AllProductsPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path={`${ROUTES.PRODUCTS}/:category`}
               element={
