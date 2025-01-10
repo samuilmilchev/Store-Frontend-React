@@ -5,6 +5,7 @@ export const ROUTES = {
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   PROFILE: "/profile",
+  PRODUCTSPAGE: "/all",
 };
 
 export default ROUTES;
