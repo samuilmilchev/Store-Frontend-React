@@ -16,6 +16,7 @@ import ProductsPage from "./components/productPage/productsPage";
 import HomePage from "./components/homePage/homePage";
 import ProfilePage from "./components/profilePage/profilePage";
 import AllProductsPage from "./components/productPage/allProductsPage";
+import CartPage from "./components/cart/cartPage";
 
 import { ROUTES } from "./routes";
 import ErrorBoundary from "./components/errorBoundary";
@@ -39,6 +40,7 @@ function App() {
           <Routes>
             <Route path={ROUTES.HOME} element={<HomePage />} />
             <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+            <Route path={ROUTES.CARTPAGE} element={<CartPage />} />
             <Route
               path={ROUTES.PRODUCTSPAGE}
               element={

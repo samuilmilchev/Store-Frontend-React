@@ -6,6 +6,7 @@ export const ROUTES = {
   SIGNUP: "/signup",
   PROFILE: "/profile",
   PRODUCTSPAGE: "/all",
+  CARTPAGE: "/cart",
 };
 
 export default ROUTES;
