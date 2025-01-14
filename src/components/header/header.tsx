@@ -17,10 +17,23 @@ function Header() {
   const navigate = useNavigate();
   const userName = useSelector((state: RootState) => state.auth.userName);
 
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      setCartItemsCount(cart.length);
+    };
+
+    const intervalId = setInterval(updateCartCount, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleNavigation = (path: string) => {
     setShowDropdown(false);
@@ -96,6 +109,10 @@ function Header() {
             <button type="button" onClick={handleSignOut} className={classNames(styles.link, styles.signOutIcon)} aria-label="Sign Out">
               <i className="fa fa-sign-out" aria-hidden="true" />
             </button>
+            <NavLink to={ROUTES.CARTPAGE} className={({ isActive }) => classNames(styles.link, { [styles.activeLink]: isActive })}>
+              <i className="fa fa-shopping-cart" aria-hidden="true" />
+              {cartItemsCount > 0 && <span className={styles.cartBadge}>{cartItemsCount}</span>}
+            </NavLink>
           </>
         ) : (
           <>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import classNames from "classnames";
 import * as styles from "./gameCard.module.scss";
 
@@ -16,9 +17,22 @@ export type Product = {
 
 type GameCardProps = Pick<Product, "id" | "name" | "price" | "description" | "image">;
 
-function GameCard({ name, price, description, image }: GameCardProps) {
+function GameCard({ id, name, price, description, image }: GameCardProps) {
+  const handleAddToCart = () => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const existingItem = cart.find((item: Product) => item.id === id);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ id, name, price, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${name} added to cart!`);
+  };
+
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
     <div className={styles.card} tabIndex={0}>
       <div className={classNames(styles.cardInner)}>
         <div className={classNames(styles.cardFront)} style={{ backgroundImage: `url(${image})` }}>
@@ -27,7 +41,7 @@ function GameCard({ name, price, description, image }: GameCardProps) {
         </div>
         <div className={classNames(styles.cardBack)}>
           <p>{description}</p>
-          <button className={styles.addToCartButton} type="button" onClick={() => {}}>
+          <button className={styles.addToCartButton} type="button" onClick={handleAddToCart}>
             Add To Cart
           </button>
         </div>
