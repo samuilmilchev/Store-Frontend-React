@@ -1,0 +1,86 @@
+.searchField {
+  position: relative;
+  width: 1000px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 1000px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 40px 8px 12px;
+  font-size: 16px;
+  border: 1px solid white;
+  border-radius: 4px;
+  background: none;
+  backdrop-filter: blur(5px);
+  color: white;
+}
+
+.magnifier {
+  position: absolute;
+  right: 12px;
+  font-size: 18px;
+  color: #aaa;
+}
+
+.spinner {
+  position: absolute;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 4px;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdownItem:hover {
+  background: #f0f0f0;
+}
+
+.dropdownButton {
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdownButton:hover {
+  background: #f0f0f0;
+}

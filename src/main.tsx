@@ -1,54 +1,85 @@
-import "./styles/main.scss";
-// watch: native intellisense and file-peek for aliases from jsconfig.json and with none-js files doesn't work: https://github.com/microsoft/TypeScript/issues/29334
-
-import { Component, ErrorInfo /* , StrictMode */ } from "react";
 import ReactDOM from "react-dom/client";
-import TheHeader from "./components/theHeader";
-import Login from "./components/account/login";
-import apiEndpoints from "./api.endpoints";
-import HelloPage from "./HelloPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-interface Props {}
-interface State {}
+import { Provider, useSelector, useDispatch } from "react-redux";
+import store, { RootState } from "./redux/store";
 
-async function testFetch(): Promise<void> {
-  const data = await (await fetch(apiEndpoints.testMock)).json();
-  console.warn("fetched data", data);
+import "font-awesome/css/font-awesome.min.css";
+import * as styles from "./styles/main.module.scss";
+// eslint-disable-next-line import/order
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
+import ProductsPage from "./components/productPage/productsPage";
+import HomePage from "./components/homePage/homePage";
+import ProfilePage from "./components/profilePage/profilePage";
+import AllProductsPage from "./components/productPage/allProductsPage";
+import CartPage from "./components/cart/cartPage";
+
+import { ROUTES } from "./routes";
+import ErrorBoundary from "./components/errorBoundary";
+import ProtectedRoute from "./components/protectedRoute";
+import { signIn } from "./redux/userSlice";
+
+function App() {
+  const userName = useSelector((state: RootState) => state.auth.userName);
+  const dispatch = useDispatch();
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const handleSignIn = (userName: string) => {
+    dispatch(signIn(userName));
+  };
+
+  return (
+    <Router>
+      <div className={styles.app}>
+        <Header />
+        <div className={styles.mainContent}>
+          <Routes>
+            <Route path={ROUTES.HOME} element={<HomePage />} />
+            <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+            <Route path={ROUTES.CARTPAGE} element={<CartPage />} />
+            <Route
+              path={ROUTES.PRODUCTSPAGE}
+              element={
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleSignIn}>
+                  <AllProductsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={`${ROUTES.PRODUCTS}/:category`}
+              element={
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleSignIn}>
+                  <ProductsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.ABOUT}
+              element={
+                <ProtectedRoute isAuthenticated={!!userName} onSignIn={handleSignIn}>
+                  <div>About Page</div>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<HomePage />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+    </Router>
+  );
 }
 
-class AppContainer extends Component<Props, State> {
-  // ["constructor"]: typeof AppContainer;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-    // test class-dead-code
-    const goExclude = true;
-    if (!goExclude) {
-      console.warn("class-dead-code doesn't work", props);
-    }
-  }
-
-  componentDidMount(): void {
-    setTimeout(testFetch, 300);
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error("got err", { error, errorInfo });
-  }
-
-  render() {
-    return (
-      // <StrictMode>
-      <>
-        <TheHeader />
-        <Login />
-        <HelloPage />
-      </>
-      // </StrictMode>
-    );
-  }
-}
-
-ReactDOM.createRoot(document.getElementById("app")!).render(<AppContainer />);
-// React + TS: https://github.com/typescript-cheatsheets/react#reacttypescript-cheatsheets
+ReactDOM.createRoot(document.getElementById("app")!).render(
+  <ErrorBoundary>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ErrorBoundary>,
+);

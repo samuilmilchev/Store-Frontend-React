@@ -1,0 +1,188 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url(../../assets/images/background.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #282c34;
+  color: #fff;
+  height: 50px;
+  border-bottom: #21a0f0;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.nav {
+  display: flex;
+  gap: 16px;
+  font-size: 17px;
+  text-decoration: none;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+  color: #61dafb;
+  transition: color 0.3s;
+  background: none;
+  border: none;
+  font-size: 17px;
+  cursor: pointer;
+  padding: 0px;
+
+  i {
+    padding-right: 2px;
+  }
+
+  &:hover,
+  &:focus,
+  &.activeLink {
+    color: #21a0f0;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 4px 2px #61dafb;
+    border-radius: 4px;
+  }
+}
+
+.dropdownToggle {
+  background-color: transparent;
+  border: none;
+  color: #61dafb;
+  padding: 0;
+  font-size: 17px;
+
+  &:hover,
+  &:focus {
+    color: #21a0f0;
+  }
+}
+
+.dropdownMenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  background-color: #282c34;
+  color: #fff;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  margin-top: 10px;
+}
+
+.dropdownItem {
+  padding: 0.5rem 1rem;
+  color: #61dafb;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #21a0f0;
+    color: #fff;
+  }
+}
+
+.dropdownWrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+
+  .dropdownToggle {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    padding-top: 3.5px;
+    font-size: 17px;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      color: #21a0f0;
+    }
+  }
+
+  .dropdownMenu {
+    /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+    @extend .dropdownItem;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background-color: #223a6c;
+    color: #fff;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 0;
+    margin-top: 10px;
+    min-width: 150px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+
+    &.visible {
+      display: block;
+    }
+  }
+
+  .dropdownItem {
+    display: block;
+    width: 100%;
+    color: #61dafb;
+    text-decoration: none;
+    text-align: left;
+    background-color: #282c34;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #21a0f0;
+      color: #fff;
+    }
+  }
+}
+
+.userName {
+  text-decoration: none;
+  color: #61dafb;
+  transition: color 0.3s;
+}
+
+.signOutIcon {
+  display: flex;
+  align-items: center;
+
+  i {
+    font-size: 20px;
+    color: #61dafb;
+
+    &:hover {
+      color: #21a0f0;
+    }
+  }
+}
+
+.cartBadge {
+  background-color: #ff4500;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 12px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
